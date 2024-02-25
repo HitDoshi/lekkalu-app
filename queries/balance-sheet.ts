@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { AddLiabilitySchema, addPhysicalAssetSchema } from '@/schema/balance-sheet'
-import { Liability, PhysicalAsset } from '@/types/balance-sheet'
-import { apiClient } from '@/utils/client'
+import { CashAssets, Liability, PhysicalAsset } from '@/types/balance-sheet'
+import { apiClient, apiv2Client } from '@/utils/client'
 
 export type AssetCreateOrEditDto = Omit<z.infer<typeof addPhysicalAssetSchema>, 'purchase_date' | 'sell_date'> & {
   purchase_date: string
@@ -63,5 +63,17 @@ export async function fetchLoanTransactions() {
 
 export async function fetchTransactionsForLoan(loanId: number) {
   const { data } = await apiClient.get(`loan_transactions/?loan=${loanId}`)
+  return data
+}
+
+/** Cash Assets */
+
+export async function addCashAsset(dto: any) {
+  const { data } = await apiv2Client.post<CashAssets>('/cash', dto)
+  return data
+}
+
+export async function editCashAsset(id: number, dto: Partial<CashAssets>) {
+  const { data } = await apiv2Client.put(`physical_assets/${id}`, dto)
   return data
 }
