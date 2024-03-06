@@ -9,17 +9,23 @@ import { hp } from '@/utils/responsive'
 import { FontSizes } from '@/utils/fonts'
 import { THEME_COLORS } from '@/utils/theme'
 import DeleteAccountModal from '@/components/delete-account-modal'
+import { router } from 'expo-router'
 
 export default function Settings() {
   const { logout } = useAuthContext()
   const theme = useTheme()
   const systemTheme = useColorScheme()
 
+  const handleZerodhaConnet = () => {
+    router.push('/(authenticated)/zerodha-login');
+  }
+
+
   return (
     <VStack p={4} space={6} flex={1} bgColor={theme.backgroundHover.get()}>
       <Feedback />
       <Button
-        height={hp(5)}
+        height={hp(6)}
         _text={{ fontSize: FontSizes.size15, color: systemTheme === 'dark' ? 'white' : THEME_COLORS.primary[600] }}
         endIcon={
           <Icon as={AntDesign} name="logout" color={systemTheme === 'dark' ? 'white' : THEME_COLORS.primary[600]} />
@@ -31,6 +37,14 @@ export default function Settings() {
       </Button>
 
       <DeleteAccountModal />
+      <Button
+        height={hp(6)}
+        _text={{ fontSize: FontSizes.size15, color: systemTheme === 'dark' ? 'white' : THEME_COLORS.primary[600] }}        
+        variant="outline"
+        onPress={()=>{handleZerodhaConnet()}}
+      >
+        Connect Zerodha
+      </Button>
     </VStack>
   )
 }

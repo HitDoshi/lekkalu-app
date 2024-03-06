@@ -157,6 +157,14 @@ export default function AuthenticatedAppLayout() {
           unmountOnBlur: true,
         }}
       />
+      <Tabs.Screen
+        name="zerodha-login"
+        options={{
+          href: null,
+          headerShown: false,
+          unmountOnBlur: true,
+        }}
+      />
     </Tabs>
   )
 }
